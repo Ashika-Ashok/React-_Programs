@@ -1,0 +1,207 @@
+import React, { useState } from 'react';
+import "./App.css";
+const ReminderApp = () => {
+  const [tasks, setTasks] = useState([]);
+  const [taskName, setTaskName] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [filter, setFilter] = useState('all');
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    if (!taskName || !dueDate) return;
+
+    const newTask = {
+      id: Date.now(),
+      taskName,
+      dueDate,
+      completed: false,
+    };
+
+    setTasks((prev) => [...prev, newTask]);
+    setTaskName('');
+    setDueDate('');
+  };
+
+  const toggleCompletion = (id) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'completed') return task.completed;
+    if (filter === 'incomplete') return !task.completed;
+    return true;
+  });
+
+  return (
+    <div>
+      <h1>Reminder App</h1>
+      <form onSubmit={handleAddTask}>
+        <input
+          type="text"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+          placeholder="Task Name"
+          required
+        />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          required
+        />
+        <button type="submit">Add Task</button>
+      </form>
+
+      <div>
+        <button onClick={() => setFilter('all')}>All</button>
+        <button onClick={() => setFilter('completed')}>Completed</button>
+        <button onClick={() => setFilter('incomplete')}>Incomplete</button>
+      </div>
+
+      <ul>
+        {filteredTasks.map((task) => (
+          <li key={task.id}>
+            <div>
+              <span>{task.taskName} - {task.dueDate}</span>
+              <button onClick={() => toggleCompletion(task.id)}>
+                {task.completed ? 'Mark Incomplete' : 'Mark Completed'}
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ReminderApp;
+----------------------------------------------
+/* Reset & Body Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #e3f2fd;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* App Container */
+div {
+  width: 100%;
+  max-width: 500px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  color: #1976d2;
+  margin-bottom: 24px;
+}
+
+/* Form Inputs */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"],
+input[type="date"] {
+  padding: 12px;
+  border: 2px solid #1f5079;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #174a7e;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+  border-color: #42a5f5;
+  outline: none;
+}
+
+/* Add Button */
+button[type="submit"] {
+  padding: 14px;
+  background-color: #42a5f5;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e88e5;
+}
+
+/* Filter Buttons */
+div > button {
+  margin: 6px 6px 0 0;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  background-color: #bbdefb;
+  color: #0d47a1;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+div > button:hover {
+  background-color: #64b5f6;
+  color: white;
+}
+
+/* Task List */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  background-color: #f1f8ff;
+  margin-bottom: 12px;
+  padding: 16px;
+  border: 2px solid #90caf9;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li span {
+  color: #0d47a1;
+  font-size: 16px;
+}
+
+/* Toggle Button */
+li button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4fc3f7;
+  color: rgb(10, 13, 99);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+li button:hover {
+  background-color: #039be5;
+}
