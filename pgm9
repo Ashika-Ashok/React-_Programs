@@ -1,0 +1,171 @@
+App.jsx
+----------------------
+import React from 'react';
+import "./App.css";
+import { Routes, Route, NavLink } from 'react-router-dom';
+import Home from './Home.jsx';
+import About from './About.jsx';
+import Contact from './Contact.jsx';
+
+function App() {
+  const linkStyle = ({ isActive }) => ({
+    margin: '0 10px',
+    textDecoration: 'none',
+    color: isActive ? 'blue' : 'black',
+    fontWeight: isActive ? 'bold' : 'normal'
+  });
+
+  return (
+    <div>
+      <nav>
+        <NavLink to="/" style={linkStyle} end>Home</NavLink>
+        <NavLink to="/about" style={linkStyle}>About</NavLink>
+        <NavLink to="/contact" style={linkStyle}>Contact</NavLink>
+      </nav>
+
+      <hr />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+
+About.jsx
+---------------------
+import React from 'react';
+import "./App.css";
+const About = () => {
+  return (
+    <div className="container">
+      <h1>About Us</h1>
+      <p> Health Portal is a digital healthcare platform created to simplify access to medical
+        services. Our mission is to empower individuals to manage their health with ease through
+        online consultations, health tracking, and education. We strive to bridge the gap
+        between patients and providers with secure, user-friendly solutions.</p>
+    </div>
+  );
+};
+
+export default About;
+
+Contact.jsx
+---------------------------------------
+import React from 'react';
+import "./App.css";
+const Contact = () => {
+  return (
+    <div className="container">
+      <h1>Contact Us</h1>
+      <p>Need assistance or have questions? Our support team is here to help.
+        Whether it's technical help, booking inquiries, or general feedback,
+        don’t hesitate to reach out.  <strong>support@healthportal.com</strong></p>
+    </div>
+  );
+};
+
+export default Contact;
+
+
+Home.jsx
+------------------------------
+import React from 'react';
+import "./App.css";
+const Home = () => {
+  return (
+    <div className="container">
+      <h1>Welcome to Health Portal</h1>
+      <p>Your one-stop solution for wellness, health tracking, and appointments.This is the main landing page of the Health Portal. Here, users can get an overview
+        of the services offered including booking appointments, accessing health records,
+        and getting wellness tips. Stay informed and proactive about your health.</p>
+    </div>
+  );
+};
+
+export default Home;
+
+App.css
+------------------------------------------------
+/* Styling for the container */
+.container {
+  width: 80%; /* Adjust the width to your preference */
+  margin: 0 auto; /* Centers the container */
+  padding: 20px; /* Adds padding inside the container */
+  background-color: #f4f4f4; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+/* Additional styling for content inside the container */
+.container h1 {
+  font-size: 2rem; /* Heading font size */
+  color: #333; /* Heading color */
+}
+
+.container p {
+  font-size: 1rem; /* Paragraph font size */
+  color: #555; /* Paragraph color */
+  line-height: 1.6; /* Adds some spacing between lines */
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5fafd;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00acc1;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+nav a {
+  margin: 0 40px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
+}
+
+nav a:hover {
+  color: #ffe082;
+  transform: scale(1.1);
+}
+
+nav a.active {
+  color: #ffeb3b;
+  font-weight: bold;
+}
+
+.container {
+  padding: 120px 30px 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #00796b;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  color: #424242;
+}
+
